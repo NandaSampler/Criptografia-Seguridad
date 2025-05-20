@@ -1,8 +1,9 @@
+/* DARK MODE PARA EL CIPHER COMPONENT */
 .cipher-container {
-  background: #fff;
+  background: #121212;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
   max-width: 600px;
   margin: 2rem auto;
   display: flex;
@@ -11,7 +12,7 @@
 
 .cipher-title {
   font-size: 1.8rem;
-  color: #2c3e50;
+  color: #f9b234;      /* acento amarillo */
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -19,15 +20,21 @@
 .cipher-label {
   font-weight: bold;
   margin-bottom: 0.5rem;
-  color: #444;
+  color: #ddd;
 }
 
 .cipher-input {
   padding: 0.8rem;
-  border: 1px solid #ccc;
+  border: 1px solid #333;
   border-radius: 8px;
   font-size: 1rem;
   margin-bottom: 1.2rem;
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.cipher-input::placeholder {
+  color: #777;
 }
 
 .cipher-buttons {
@@ -39,7 +46,7 @@
 .btn {
   padding: 0.6rem 1.2rem;
   border: none;
-  background-color: #3498db;
+  background-color: #3ecd5e;  /* verde burbuja */
   color: white;
   border-radius: 8px;
   font-weight: bold;
@@ -48,28 +55,28 @@
 }
 
 .btn:hover {
-  background-color: #2980b9;
+  background-color: #2ea64b;
 }
 
 .btn.alt {
-  background-color: #95a5a6;
+  background-color: #952aff;   /* morado burbuja */
 }
 
 .btn.alt:hover {
-  background-color: #7f8c8d;
+  background-color: #7a22d1;
 }
 
 .cipher-output {
-  background: #f4f4f4;
+  background: #1e1e1e;
   padding: 1rem;
   border-radius: 8px;
-  border: 1px solid #ddd;
-  color: #333;
+  border: 1px solid #333;
+  color: #eee;
 }
 
 .cipher-description {
   font-size: 0.95rem;
   margin-bottom: 1.2rem;
-  color: #555;
+  color: #bbb;
   line-height: 1.5;
 }

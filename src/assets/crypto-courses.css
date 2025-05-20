@@ -1,0 +1,126 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+}
+
+.crypto-courses-container {
+  width: 100%;
+  max-width: 1142px;
+  margin: 0 auto;
+  padding: 50px 2%;
+  box-sizing: border-box;
+}
+
+/* Título resaltado */
+.crypto-courses-container h1 {
+  display: inline-block;
+  font-size: 3rem;
+  background-color: #f9b234;
+  color: #121212;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 40px;
+}
+
+/* 3 columnas fijas: 3 en la primera fila, 2 en la segunda (queda un hueco en la tercera columna) */
+.crypto-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 30px;      /* espacio entre filas */
+  column-gap: 60px;   /* espacio entre tarjetas en la misma fila */
+  justify-items: center;
+}
+
+/* Tarjeta dentro de la celda de grid */
+.crypto-courses-card {
+  width: 100%;
+  max-width: 360px;
+  padding: 30px 20px;
+  background-color: #121212;
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+/* Título interno */
+.crypto-courses-card h2 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #FFF;
+  min-height: 87px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Descripción */
+.crypto-courses-card p {
+  font-size: 18px;
+  color: #FFF;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* “Ver más” */
+.crypto-courses-link {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f9b234;
+  position: relative;
+  z-index: 2;
+  transition: color 0.5s ease;
+}
+.crypto-courses-card:hover .crypto-courses-link {
+  color: #FFF;
+}
+
+/* Burbuja de color */
+.crypto-courses-card::before {
+  content: "";
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  position: absolute;
+  top: -75px;
+  right: -75px;
+  z-index: 1;
+  background-color: #f9b234;
+  transition: transform 0.5s ease;
+}
+.crypto-courses-card:hover::before {
+  transform: scale(10);
+}
+
+/* Colores alternados */
+.crypto-courses-card:nth-child(2n)::before { background-color: #3ecd5e; }
+.crypto-courses-card:nth-child(3n)::before { background-color: #e44002; }
+.crypto-courses-card:nth-child(4n)::before { background-color: #952aff; }
+.crypto-courses-card:nth-child(5n)::before { background-color: #cd3e94; }
+
+/* Responsive: pasa a dos columnas */
+@media (max-width: 979px) {
+  .crypto-courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .crypto-courses-card h2 {
+    font-size: 24px;
+  }
+}
+/* Responsive móvil: una columna */
+@media (max-width: 639px) {
+  .crypto-courses-grid {
+    grid-template-columns: 1fr;
+  }
+  .crypto-courses-card {
+    padding: 22px 40px;
+  }
+  .crypto-courses-card h2 {
+    font-size: 24px;
+    min-height: 72px;
+    line-height: 1;
+  }
+}
