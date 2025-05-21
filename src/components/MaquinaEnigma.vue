@@ -26,7 +26,16 @@
         <li v-for="(paso, i) in pasos" :key="i">{{ paso }}</li>
       </ul>
     </div>
+
+    <div v-if="resultado" class="cipher-warning">
+      ✅ Este método fue revolucionario en su época, con millones de combinaciones posibles gracias a sus rotores y
+      clavijas.
+      <strong>Aunque ya ha sido superado, es un gran ejemplo de criptografía mecánica avanzada.</strong>
+    </div>
   </div>
+
+
+
 </template>
 
 <script>

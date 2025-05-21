@@ -1,7 +1,18 @@
-<!-- src/views/Criptografia.vue -->
 <template>
   <div class="crypto-courses-container">
+    <router-link to="/" class="crypto-back-button">← Volver</router-link>
+
+    <p class="crypto-intro">
+      ¿Quieres generar una contraseña usando criptografía antigua?<br>
+      Descubre qué tan seguras serían hoy estos métodos históricos.
+    </p>
+
     <h1>Módulo de Criptografía</h1>
+
+    <!-- NUEVO BOTÓN -->
+    <router-link to="/seguridad" class="secure-password-btn">
+      Aprende a crear contraseñas seguras →
+    </router-link>
 
     <div class="crypto-courses-grid">
       <router-link

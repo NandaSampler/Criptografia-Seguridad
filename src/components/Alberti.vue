@@ -5,7 +5,8 @@
     </h2>
 
     <p class="cipher-description">
-      Usa un disco con múltiples alfabetos para modificar el cifrado según una clave rotativa. Es un sistema polialfabético temprano.
+      Usa un disco con múltiples alfabetos para modificar el cifrado según una clave rotativa. Es un sistema
+      polialfabético temprano.
     </p>
 
     <label class="cipher-label">Texto:</label>
@@ -24,17 +25,23 @@
     </div>
 
     <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
-  <strong>Pasos:</strong>
-  <ul>
-    <li v-for="(paso, i) in pasos" :key="i">{{ paso }}</li>
-  </ul>
+      <strong>Pasos:</strong>
+      <ul>
+        <li v-for="(paso, i) in pasos" :key="i">{{ paso }}</li>
+      </ul>
+    </div>
+
+    <div v-if="resultado" class="cipher-warning">
+  🔐 Este cifrado polialfabético rotativo fue uno de los más avanzados de su tiempo.  
+  <strong>Más seguro que los cifrados monoalfabéticos, aunque aún vulnerable sin claves modernas.</strong>
 </div>
+
 
   </div>
 </template>
 
 
-    <script>
+<script>
 export default {
   name: 'Alberti',
   data() {
@@ -116,4 +123,3 @@ export default {
   }
 };
 </script>
-

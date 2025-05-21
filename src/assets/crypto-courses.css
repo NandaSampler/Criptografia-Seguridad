@@ -124,3 +124,50 @@ html, body {
     line-height: 1;
   }
 }
+
+.crypto-back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 1rem;
+  color: #f9b234;
+  text-decoration: none;
+  border: 2px solid #f9b234;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background-color: transparent;
+  z-index: 1000;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.crypto-back-button:hover {
+  background-color: #f9b234;
+  color: #121212;
+}
+
+.crypto-intro {
+  font-size: 1.3rem;
+  color: #ccc;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.secure-password-btn {
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 10px 20px;
+  background-color: #3ecd5e;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+.secure-password-btn:hover {
+  background-color: #2ea64f;
+}
+
+
+
+

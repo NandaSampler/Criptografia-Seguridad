@@ -20,6 +20,12 @@
             <strong>Resultado:</strong> {{ resultado }}
         </div>
 
+        <div v-if="resultado" class="cipher-warning">
+  ⚠️ Este cifrado produce solo números, lo que lo hace predecible.  
+  <strong>No se recomienda usarlo para contraseñas modernas.</strong>
+</div>
+
+
         <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
   <strong>Pasos:</strong>
   <ul>

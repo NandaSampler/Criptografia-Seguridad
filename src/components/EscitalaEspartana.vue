@@ -22,6 +22,12 @@
             <strong>Resultado:</strong> {{ resultado }}
         </div>
 
+        <div v-if="resultado" class="cipher-warning">
+  ⚠️ Este método depende del objeto físico (el cilindro) y es fácilmente vulnerable si se conoce la cantidad de columnas.  
+  <strong>No es adecuado para proteger información sensible hoy en día.</strong>
+</div>
+
+
         <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
   <strong>Pasos:</strong>
   <ul>

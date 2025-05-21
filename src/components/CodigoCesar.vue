@@ -5,7 +5,8 @@
     </h2>
 
     <p class="cipher-description">
-      Cifra desplazando cada letra del mensaje un número fijo de posiciones en el alfabeto. Es uno de los métodos de cifrado más antiguos.
+      Cifra desplazando cada letra del mensaje un número fijo de posiciones en el alfabeto. Es uno de los métodos de
+      cifrado más antiguos.
     </p>
 
     <label class="cipher-label">Texto:</label>
@@ -29,7 +30,17 @@
         <li v-for="(paso, i) in pasos" :key="i">{{ paso }}</li>
       </ul>
     </div>
+
+      <div v-if="resultado" class="cipher-warning">
+    ⚠️ Este cifrado es extremadamente fácil de romper por fuerza bruta: sólo existen 25 combinaciones posibles.
+    <strong>Evita usarlo para datos importantes o contraseñas.</strong>
   </div>
+
+
+
+  </div>
+
+
 </template>
 
 <script>
@@ -45,71 +56,71 @@ export default {
   },
   methods: {
     cifrar() {
-  this.pasos = [];
-  this.resultado = '';
-  let resultadoParcial = '';
-  const texto = this.texto;
-  const clave = this.clave;
+      this.pasos = [];
+      this.resultado = '';
+      let resultadoParcial = '';
+      const texto = this.texto;
+      const clave = this.clave;
 
-  const procesarLetra = (i) => {
-    if (i >= texto.length) return;
+      const procesarLetra = (i) => {
+        if (i >= texto.length) return;
 
-    const original = texto[i];
-    const charCode = original.charCodeAt(0);
+        const original = texto[i];
+        const charCode = original.charCodeAt(0);
 
-    if (original.match(/[a-zA-Z]/)) {
-      const base = original === original.toUpperCase() ? 65 : 97;
-      const nuevoCharCode = (charCode - base + clave) % 26 + base;
-      const nuevo = String.fromCharCode(nuevoCharCode);
-      resultadoParcial += nuevo;
+        if (original.match(/[a-zA-Z]/)) {
+          const base = original === original.toUpperCase() ? 65 : 97;
+          const nuevoCharCode = (charCode - base + clave) % 26 + base;
+          const nuevo = String.fromCharCode(nuevoCharCode);
+          resultadoParcial += nuevo;
 
-      this.pasos.push(`'${original}' → '${nuevo}' (código ${charCode} → ${nuevoCharCode})`);
-    } else {
-      resultadoParcial += original;
-      this.pasos.push(`'${original}' no se cifra (carácter especial)`);
-    }
+          this.pasos.push(`'${original}' → '${nuevo}' (código ${charCode} → ${nuevoCharCode})`);
+        } else {
+          resultadoParcial += original;
+          this.pasos.push(`'${original}' no se cifra (carácter especial)`);
+        }
 
-    this.resultado = resultadoParcial;
+        this.resultado = resultadoParcial;
 
-    setTimeout(() => procesarLetra(i + 1), 800);
-  };
+        setTimeout(() => procesarLetra(i + 1), 800);
+      };
 
-  procesarLetra(0);
-},
+      procesarLetra(0);
+    },
 
 
     descifrar() {
-  this.pasos = [];
-  this.resultado = '';
-  let resultadoParcial = '';
-  const texto = this.texto;
-  const clave = this.clave;
+      this.pasos = [];
+      this.resultado = '';
+      let resultadoParcial = '';
+      const texto = this.texto;
+      const clave = this.clave;
 
-  const procesarLetra = (i) => {
-    if (i >= texto.length) return;
+      const procesarLetra = (i) => {
+        if (i >= texto.length) return;
 
-    const original = texto[i];
-    const charCode = original.charCodeAt(0);
+        const original = texto[i];
+        const charCode = original.charCodeAt(0);
 
-    if (original.match(/[a-zA-Z]/)) {
-      const base = original === original.toUpperCase() ? 65 : 97;
-      const nuevoCharCode = (charCode - base - clave + 26) % 26 + base;
-      const nuevo = String.fromCharCode(nuevoCharCode);
-      resultadoParcial += nuevo;
+        if (original.match(/[a-zA-Z]/)) {
+          const base = original === original.toUpperCase() ? 65 : 97;
+          const nuevoCharCode = (charCode - base - clave + 26) % 26 + base;
+          const nuevo = String.fromCharCode(nuevoCharCode);
+          resultadoParcial += nuevo;
 
-      this.pasos.push(`'${original}' → '${nuevo}' (código ${charCode} → ${nuevoCharCode})`);
-    } else {
-      resultadoParcial += original;
-      this.pasos.push(`'${original}' no se descifra (carácter especial)`);
+          this.pasos.push(`'${original}' → '${nuevo}' (código ${charCode} → ${nuevoCharCode})`);
+        } else {
+          resultadoParcial += original;
+          this.pasos.push(`'${original}' no se descifra (carácter especial)`);
+        }
+
+        this.resultado = resultadoParcial;
+
+        setTimeout(() => procesarLetra(i + 1), 800);
+      };
+
+      procesarLetra(0);
     }
-
-    this.resultado = resultadoParcial;
-
-    setTimeout(() => procesarLetra(i + 1), 800);
-  };
-
-  procesarLetra(0);
-}
 
   }
 };
