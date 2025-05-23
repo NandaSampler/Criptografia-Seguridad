@@ -19,16 +19,19 @@
     </button>
 
     <Evaluar v-if="mostrarEvaluador" />
+    <Generador />
   </div>
 </template>
 
 <script>
 import Evaluar from '@/components/Evaluar.vue';
+import Generador from '@/components/Generador.vue'; 
 
 export default {
   name: 'ContraseñaSegura',
   components: {
-    Evaluar
+    Evaluar,
+    Generador
   },
   data() {
     return {
@@ -38,7 +41,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .password-container {
   max-width: 800px;
   margin: 0 auto;

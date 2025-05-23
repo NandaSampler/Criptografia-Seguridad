@@ -35,9 +35,6 @@
     ⚠️ Este cifrado es extremadamente fácil de romper por fuerza bruta: sólo existen 25 combinaciones posibles.
     <strong>Evita usarlo para datos importantes o contraseñas.</strong>
   </div>
-
-
-
   </div>
 
 

@@ -1,39 +1,39 @@
 <template>
-    <div class="cipher-container">
-        <h2 class="cipher-title">Cifrado de Polibio</h2>
+  <div class="cipher-container">
+    <h2 class="cipher-title">Cifrado de Polibio</h2>
 
 
-        <p class="cipher-description">
-            Utiliza una tabla 5x5 para convertir letras en pares de números según su posición. Fue usado para enviar
-            mensajes codificados con señales.
-        </p>
+    <p class="cipher-description">
+      Utiliza una tabla 5x5 para convertir letras en pares de números según su posición. Fue usado para enviar
+      mensajes codificados con señales.
+    </p>
 
-        <label for="input" class="cipher-label">Texto:</label>
-        <input id="input" v-model="texto" class="cipher-input" />
+    <label for="input" class="cipher-label">Texto:</label>
+    <input id="input" v-model="texto" class="cipher-input" />
 
-        <div class="cipher-buttons">
-            <button @click="cifrar" class="btn">Cifrar</button>
-            <button @click="descifrar" class="btn alt">Descifrar</button>
-        </div>
-
-        <div v-if="resultado" class="cipher-output">
-            <strong>Resultado:</strong> {{ resultado }}
-        </div>
-
-        <div v-if="resultado" class="cipher-warning">
-  ⚠️ Este cifrado produce solo números, lo que lo hace predecible.  
-  <strong>No se recomienda usarlo para contraseñas modernas.</strong>
-</div>
-
-
-        <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
-  <strong>Pasos:</strong>
-  <ul>
-    <li v-for="(paso, i) in pasos" :key="i">{{ paso }}</li>
-  </ul>
-</div>
-
+    <div class="cipher-buttons">
+      <button @click="cifrar" class="btn">Cifrar</button>
+      <button @click="descifrar" class="btn alt">Descifrar</button>
     </div>
+
+    <div v-if="resultado" class="cipher-output">
+      <strong>Resultado:</strong> {{ resultado }}
+    </div>
+
+    <div v-if="resultado" class="cipher-warning">
+      ⚠️ Este cifrado produce solo números, lo que lo hace predecible.
+      <strong>No se recomienda usarlo para contraseñas modernas.</strong>
+    </div>
+
+
+    <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
+      <strong>Pasos:</strong>
+      <ul>
+        <li v-for="(paso, i) in pasos" :key="i">{{ paso }}</li>
+      </ul>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -135,4 +135,3 @@ export default {
   }
 };
 </script>
-
