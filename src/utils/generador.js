@@ -46,30 +46,46 @@ export function generarAleatoria({ longitud, excluir, maxNumeros, maxMayusculas,
   return shuffle(base).join('');
 }
 
-export function generarConEnigma(entrada) {
+export function generarConEnigma(entrada, claveUsuario = 'BDFHJLC...') {
   const base = 'abcdefghijklmnopqrstuvwxyz';
-  const clave = 'BDFHJLCPRTXVZNYEIWGAKMUSQO';
-  const input = entrada.toLowerCase();
+  const clave = (claveUsuario || '').toUpperCase().padEnd(26, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
   let salida = '';
-  for (let i = 0; i < input.length; i++) {
-    const letra = input[i];
+  for (let i = 0; i < entrada.length; i++) {
+    const letraOriginal = entrada[i];
+    const letra = letraOriginal.toLowerCase();
     const idx = base.indexOf(letra);
-    salida += idx >= 0 ? clave[idx] : letra;
+
+    if (idx >= 0) {
+      const letraCifrada = clave[idx % clave.length];
+      salida += letraOriginal === letraOriginal.toUpperCase()
+        ? letraCifrada.toUpperCase()
+        : letraCifrada.toLowerCase();
+    } else {
+      salida += letraOriginal;
+    }
   }
   return salida;
 }
 
-export function generarConAlberti(entrada) {
+export function generarConAlberti(entrada, claveUsuario = 'kngcadsxbvfhjtiumylzqropwe') {
   const discoFijo = 'abcdefghijklmnopqrstuvwxyz';
-  const discoMovil = 'kngcadsxbvfhjtiumylzqropwe';
-  const input = entrada.toLowerCase();
+  const discoMovil = (claveUsuario || '').toLowerCase().padEnd(26, 'kngcadsxbvfhjtiumylzqropwe');
 
   let salida = '';
-  for (let i = 0; i < input.length; i++) {
-    const letra = input[i];
+  for (let i = 0; i < entrada.length; i++) {
+    const letraOriginal = entrada[i];
+    const letra = letraOriginal.toLowerCase();
     const idx = discoFijo.indexOf(letra);
-    salida += idx >= 0 ? discoMovil[(idx + i) % 26] : letra;
+
+    if (idx >= 0) {
+      const cifrada = discoMovil[(idx + i) % 26];
+      salida += letraOriginal === letraOriginal.toUpperCase()
+        ? cifrada.toUpperCase()
+        : cifrada;
+    } else {
+      salida += letraOriginal;
+    }
   }
   return salida;
 }

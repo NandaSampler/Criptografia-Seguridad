@@ -17,15 +17,12 @@
         <input type="text" v-model="excluir" placeholder="Ej: lIO0" />
       </label>
       <label>Cantidad máxima de números:
-        <input type="number" v-model.number="maxNumeros" min="1" />
+        <input type="number" v-model.number="maxNumeros" min="0" max="5" />
       </label>
       <label>Cantidad máxima de mayúsculas:
-        <input type="number" v-model.number="maxMayusculas" min="1" />
+        <input type="number" v-model.number="maxMayusculas" min="0" max="5" />
       </label>
-      <label>
-        <input type="checkbox" v-model="incluirSimbolos" />
-        Incluir símbolos
-      </label>
+      <label><input type="checkbox" v-model="incluirSimbolos" /> Incluir símbolos</label>
     </div>
 
     <div v-if="modo === 'personalizada'" class="config-avanzada">
@@ -40,8 +37,16 @@
       </label>
     </div>
 
+    <div v-if="modo === 'enigma' || modo === 'alberti'" class="config-avanzada">
+      <label>Clave:
+        <input type="text" v-model="clave" placeholder="Ej: ABC12" maxlength="20" />
+        <button @click="generarClaveAleatoria">Clave aleatoria</button>
+      </label>
+    </div>
+
     <button class="generar-btn" @click="generar">Generar contraseña</button>
 
+    <!-- Resultado -->
     <div v-if="modo === 'personalizada' && resultado" class="resultado resaltado">
       <p><strong>Contraseña generada:</strong></p>
       <p class="resultado-coloreado" v-html="contrasenaResaltada"></p>
@@ -70,6 +75,16 @@
         <li v-for="(item, i) in historial" :key="i"><code>{{ item }}</code></li>
       </ul>
     </div>
+
+    <!-- Enlace informativo para Enigma o Alberti -->
+    <div v-if="(modo === 'enigma' || modo === 'alberti') && resultado" class="enlace-metodos">
+      <p>
+        Esta contraseña se generó con un texto de ingreso aleatorio.
+        <router-link to="/criptografia" class="enlace-clave">
+          ¿Quieres personalizar tu texto? Explora los métodos de encriptación →
+        </router-link>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -78,8 +93,7 @@ import '@/assets/generador.css';
 import {
   generarAleatoria,
   generarConEnigma,
-  generarConAlberti,
-  generarPersonalizada
+  generarConAlberti
 } from '@/utils/generador.js';
 
 export default {
@@ -98,7 +112,8 @@ export default {
       incluirSimbolos: true,
       frase: '',
       fecha: '',
-      simbolosPreferidos: '/?#%'
+      simbolosPreferidos: '/?#%',
+      clave: ''
     };
   },
   computed: {
@@ -108,15 +123,11 @@ export default {
       const sep = simbolos[0] || '#';
       const start = simbolos[1] || sep;
       const end = simbolos[2] || start;
-
       const esc = s => s.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
       const regex = new RegExp(`^(${esc(start)}\\d{2}\\d{2})([A-Za-z]+)(${esc(sep)})([A-Za-z]+)(${esc(end)}\\d{3})$`);
       const match = this.resultado.match(regex);
-
       if (!match) return `<code>${this.resultado}</code>`;
-
       const [, inicio, letras1, separador, letras2, final] = match;
-
       return `
         <span class="color-inicio">${inicio}</span>
         <span class="color-letras">${letras1}</span>
@@ -131,41 +142,69 @@ export default {
       this.copiado = false;
       this.desglose = [];
 
+      const base = generarAleatoria({
+        longitud: this.longitud,
+        excluir: this.excluir,
+        maxNumeros: this.maxNumeros,
+        maxMayusculas: this.maxMayusculas,
+        incluirSimbolos: this.incluirSimbolos
+      });
+
       if (this.modo === 'aleatoria') {
-        this.resultado = generarAleatoria({
-          longitud: this.longitud,
-          excluir: this.excluir,
-          maxNumeros: this.maxNumeros,
-          maxMayusculas: this.maxMayusculas,
-          incluirSimbolos: this.incluirSimbolos
-        });
+        this.resultado = base;
       } else if (this.modo === 'enigma') {
-        const base = generarAleatoria({
-          longitud: this.longitud,
-          excluir: this.excluir,
-          maxNumeros: this.maxNumeros,
-          maxMayusculas: this.maxMayusculas,
-          incluirSimbolos: this.incluirSimbolos
-        });
-        this.resultado = generarConEnigma(base);
+        this.resultado = generarConEnigma(base, this.clave || 'KEY01');
       } else if (this.modo === 'alberti') {
-        const base = generarAleatoria({
-          longitud: this.longitud,
-          excluir: this.excluir,
-          maxNumeros: this.maxNumeros,
-          maxMayusculas: this.maxMayusculas,
-          incluirSimbolos: this.incluirSimbolos
-        });
-        this.resultado = generarConAlberti(base);
+        this.resultado = generarConAlberti(base, this.clave || 'KEY01');
       } else if (this.modo === 'personalizada') {
-        this.resultado = generarPersonalizada(this.frase, this.fecha, this.simbolosPreferidos);
-        this.desglose = [
-          `Frase: "${this.frase}"`,
-          `Fecha: "${this.fecha}"`,
-          `Símbolos: "${this.simbolosPreferidos}"`,
-          `Resultado generado: ${this.resultado}`
-        ];
+        this.resultado = this.generarPersonalizada();
       }
+    },
+    generarPersonalizada() {
+      if (!this.frase || !this.fecha) return 'Completa los campos.';
+      this.desglose = [];
+
+      const palabras = this.frase
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, '')
+        .split(/\s+/)
+        .filter(Boolean);
+
+      const inicialesRaw = palabras.map(p => p[0]);
+      const iniciales = inicialesRaw.join('');
+      const capitalizado = iniciales.charAt(0).toUpperCase() + iniciales.slice(1);
+
+      const fechaNumeros = this.fecha.replace(/[^0-9]/g, '').padStart(8, '0');
+      const dia = fechaNumeros.slice(0, 2).replace(/^0/, '');
+      const mes = fechaNumeros.slice(2, 4).replace(/^0/, '');
+      const anio = fechaNumeros.slice(4);
+
+      const simbolos = this.simbolosPreferidos.replace(/\s/g, '').split('').filter(Boolean);
+      const sep = simbolos[0] || '#';
+      const start = simbolos[1] || sep;
+      const end = simbolos[2] || start;
+
+      const mitad = Math.ceil(capitalizado.length / 2);
+      const parte1 = capitalizado.slice(0, mitad);
+      const parte2 = capitalizado.slice(mitad);
+
+      const contrasena = `${start}${dia}${mes}${parte1}${sep}${parte2}${end}${anio.slice(-3)}`;
+
+      this.desglose.push(`Frase: "${this.frase}" → Iniciales: ${inicialesRaw.join(' ')}`);
+      this.desglose.push(`Capitalización: ${capitalizado}`);
+      this.desglose.push(`Fecha: ${this.fecha} → Día: ${dia}, Mes: ${mes}, Año: ${anio}`);
+      this.desglose.push(`Símbolos usados → inicio: '${start}', separador: '${sep}', final: '${end}'`);
+      this.desglose.push(`Contraseña generada: ${contrasena}`);
+
+      return contrasena;
+    },
+    generarClaveAleatoria() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let clave = '';
+      for (let i = 0; i < 5; i++) {
+        clave += chars[Math.floor(Math.random() * chars.length)];
+      }
+      this.clave = clave;
     },
     copiar() {
       navigator.clipboard.writeText(this.resultado).then(() => {
@@ -183,19 +222,8 @@ export default {
 </script>
 
 <style>
-.color-inicio {
-  color: #f39c12;
-  font-weight: bold;
-}
-.color-letras {
-  color: #ffffff;
-}
-.color-separador {
-  color: #1abc9c;
-  font-weight: bold;
-}
-.color-final {
-  color: #e74c3c;
-  font-weight: bold;
-}
+.color-inicio { color: #f39c12; font-weight: bold; }
+.color-letras { color: #ffffff; }
+.color-separador { color: #1abc9c; font-weight: bold; }
+.color-final { color: #e74c3c; font-weight: bold; }
 </style>

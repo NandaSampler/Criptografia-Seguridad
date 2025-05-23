@@ -134,5 +134,35 @@ input[type="text"] {
   color: #e74c3c;
   font-weight: bold;
 }
+.nota-metodo {
+  margin-top: 15px;
+  font-size: 0.95rem;
+  color: #ccc;
+  background-color: #1e1e1e;
+  padding: 12px;
+  border-left: 4px solid #f9b234;
+  border-radius: 4px;
+}
+
+.enlace-metodos {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.enlace-clave {
+  display: inline-block;
+  margin-top: 5px;
+  color: #1abc9c;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.enlace-clave:hover {
+  text-decoration: underline;
+}
+
+
+
 
 
