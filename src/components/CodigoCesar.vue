@@ -24,6 +24,11 @@
       <strong>Resultado:</strong> {{ resultado }}
     </div>
 
+    <div v-if="resultado" class="cipher-buttons">
+      <button class="copiar-btn" @click="copiar">Copiar</button>
+      <span v-if="copiado" class="copiado-msg">¡Copiado al portapapeles!</span>
+    </div>
+
     <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
       <strong>Pasos:</strong>
       <ul>
@@ -31,13 +36,15 @@
       </ul>
     </div>
 
-      <div v-if="resultado" class="cipher-warning">
-    ⚠️ Este cifrado es extremadamente fácil de romper por fuerza bruta: sólo existen 25 combinaciones posibles.
-    <strong>Evita usarlo para datos importantes o contraseñas.</strong>
-  </div>
-  </div>
+    <div v-if="resultado" class="cipher-warning">
+      ⚠️ Este cifrado es extremadamente fácil de romper por fuerza bruta: sólo existen 25 combinaciones posibles.
+      <strong>Evita usarlo para datos importantes o contraseñas.</strong>
+    </div>
 
-
+    <router-link to="/criptografia" class="cipher-back-button">
+      ← Volver
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -48,13 +55,15 @@ export default {
       texto: '',
       clave: 3,
       resultado: '',
-      pasos: []
+      pasos: [],
+      copiado: false
     };
   },
   methods: {
     cifrar() {
       this.pasos = [];
       this.resultado = '';
+      this.copiado = false;
       let resultadoParcial = '';
       const texto = this.texto;
       const clave = this.clave;
@@ -70,7 +79,6 @@ export default {
           const nuevoCharCode = (charCode - base + clave) % 26 + base;
           const nuevo = String.fromCharCode(nuevoCharCode);
           resultadoParcial += nuevo;
-
           this.pasos.push(`'${original}' → '${nuevo}' (código ${charCode} → ${nuevoCharCode})`);
         } else {
           resultadoParcial += original;
@@ -78,17 +86,16 @@ export default {
         }
 
         this.resultado = resultadoParcial;
-
         setTimeout(() => procesarLetra(i + 1), 800);
       };
 
       procesarLetra(0);
     },
 
-
     descifrar() {
       this.pasos = [];
       this.resultado = '';
+      this.copiado = false;
       let resultadoParcial = '';
       const texto = this.texto;
       const clave = this.clave;
@@ -104,7 +111,6 @@ export default {
           const nuevoCharCode = (charCode - base - clave + 26) % 26 + base;
           const nuevo = String.fromCharCode(nuevoCharCode);
           resultadoParcial += nuevo;
-
           this.pasos.push(`'${original}' → '${nuevo}' (código ${charCode} → ${nuevoCharCode})`);
         } else {
           resultadoParcial += original;
@@ -112,13 +118,18 @@ export default {
         }
 
         this.resultado = resultadoParcial;
-
         setTimeout(() => procesarLetra(i + 1), 800);
       };
 
       procesarLetra(0);
-    }
+    },
 
+    copiar() {
+      navigator.clipboard.writeText(this.resultado).then(() => {
+        this.copiado = true;
+        setTimeout(() => (this.copiado = false), 2000);
+      });
+    }
   }
 };
 </script>

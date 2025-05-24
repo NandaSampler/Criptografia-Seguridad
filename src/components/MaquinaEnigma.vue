@@ -1,7 +1,8 @@
 <template>
   <div class="cipher-container">
-    <h2 class="cipher-title" style="color: #7f8c8d;">Máquina Enigma</h2>
-
+    <h2 class="cipher-title" style="color: #8e44ad;">
+      Máquina Enigma
+    </h2>
     <p class="cipher-description">
       Simula los rotores de la famosa máquina Enigma utilizada en la Segunda Guerra Mundial.
     </p>
@@ -20,6 +21,11 @@
       <strong>Resultado:</strong> {{ resultado }}
     </div>
 
+    <div v-if="resultado" class="cipher-buttons">
+      <button class="copiar-btn" @click="copiar">Copiar</button>
+      <span v-if="copiado" class="copiado-msg">¡Copiado al portapapeles!</span>
+    </div>
+
     <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
       <strong>Pasos:</strong>
       <ul>
@@ -28,14 +34,15 @@
     </div>
 
     <div v-if="resultado" class="cipher-warning">
-      ✅ Este método fue revolucionario en su época, con millones de combinaciones posibles gracias a sus rotores y
-      clavijas.
-      <strong>Aunque ya ha sido superado, es un gran ejemplo de criptografía mecánica avanzada.</strong>
+      ✅ Este método fue revolucionario en su época, con millones de combinaciones posibles gracias a sus rotores y clavijas.
+      <strong>Es un gran ejemplo de criptografía mecánica avanzada y puede servirte para cifrar tu contraseña.</strong>
     </div>
+
+    <!-- Botón de volver -->
+    <router-link to="/criptografia" class="cipher-back-button">
+      ← Volver
+    </router-link>
   </div>
-
-
-
 </template>
 
 <script>
@@ -48,19 +55,17 @@ export default {
       texto: '',
       clave: '',
       resultado: '',
-      pasos: []
+      pasos: [],
+      copiado: false
     };
   },
   methods: {
     procesar() {
-      // Reinicia completamente
-      const textoInicial = this.texto;
-      const claveInicial = this.clave;
-
       this.resultado = '';
       this.pasos = [];
+      this.copiado = false;
 
-      const { resultado, pasos } = procesarEnigmaConPasos(textoInicial, claveInicial);
+      const { resultado, pasos } = procesarEnigmaConPasos(this.texto, this.clave);
       this.animarResultado(resultado, pasos);
     },
     animarResultado(resultado, pasos) {
@@ -77,6 +82,14 @@ export default {
       };
 
       mostrarLetra();
+    },
+    copiar() {
+      navigator.clipboard.writeText(this.resultado).then(() => {
+        this.copiado = true;
+        setTimeout(() => {
+          this.copiado = false;
+        }, 2000);
+      });
     }
   }
 };

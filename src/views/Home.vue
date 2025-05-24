@@ -1,6 +1,15 @@
 <template>
   <div class="home-container">
-    <h1>Bienvenido al Módulo de Criptografía</h1>
+    <h1>Bienvenido a Criptografía Web</h1>
+
+    <div class="intro-crypto">
+      <h2>¿Qué es la criptografía?</h2>
+      <p>
+        La criptografía es el arte de proteger la información mediante técnicas de codificación
+        que impiden que personas no autorizadas puedan entenderla. Desde la antigüedad hasta la era digital,
+        ha sido esencial para la seguridad en la comunicación y el resguardo de datos sensibles.
+      </p>
+    </div>
 
     <div class="home-content">
       <section class="home-section">
@@ -63,9 +72,11 @@
       </section>
     </div>
 
-    <router-link to="/criptografia" class="home-button">
-      Comenzar Módulo de Criptografía →
-    </router-link>
+  <div class="home-button-wrapper">
+  <router-link to="/criptografia" class="home-button">
+    Descubre cómo usar estos métodos criptográficos →
+  </router-link>
+</div>
   </div>
 </template>
 

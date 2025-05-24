@@ -28,6 +28,9 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }; // 👈 Esto fuerza el scroll al inicio
+  }
 });
 
 export default router;

@@ -12,6 +12,7 @@
       <li>❌ No uses palabras comunes, fechas de nacimiento o patrones simples.</li>
       <li>✅ Utiliza frases o combinaciones poco comunes (por ejemplo: <em>Gu4camole#Lun3s!</em>).</li>
       <li>✅ Nunca reutilices la misma contraseña en varios sitios.</li>
+      <li><strong>Consejo: Para que tu contraseña sea efectiva, debes recordarla, para ello te recomendamos el modo personalizado del generador de contraseñas</strong></li>
     </ul>
 
     <button class="evaluate-btn" @click="mostrarEvaluador = !mostrarEvaluador">

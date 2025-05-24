@@ -2,14 +2,14 @@
   <header class="navbar">
     <div class="navbar-content">
       <div class="navbar-logo">
-        <router-link to="/">🔐 CryptoApp</router-link>
+        <router-link to="/">🔐 CriptografíaWeb</router-link>
       </div>
       <button class="hamburger" @click="menuAbierto = !menuAbierto">
         ☰
       </button>
       <nav :class="['nav-links', { abierto: menuAbierto }]">
         <router-link to="/" exact-active-class="activo" @click="menuAbierto = false">Inicio</router-link>
-        <router-link to="/criptografia" active-class="activo" @click="menuAbierto = false">Encriptación</router-link>
+        <router-link to="/criptografia" active-class="activo" @click="menuAbierto = false">Criptografia</router-link>
         <router-link to="/seguridad" active-class="activo" @click="menuAbierto = false">Contraseña Segura</router-link>
       </nav>
     </div>
@@ -96,7 +96,7 @@ export default {
  .nav-links {
   display: flex;
   gap: 20px;
-  margin-left: 20px; /* mueve los enlaces más a la izquierda */
+  margin-left: 20px;
 }
 
   .nav-links.abierto {
@@ -108,7 +108,6 @@ export default {
     text-align: right;
   }
 
-  /* Asegura que todo esté dentro del ancho de pantalla */
 * {
   box-sizing: border-box;
 }

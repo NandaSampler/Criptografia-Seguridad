@@ -1,18 +1,10 @@
 <template>
   <div class="crypto-courses-container">
-    <router-link to="/" class="crypto-back-button">← Volver</router-link>
-
+    <h1>Módulo de Criptografía</h1>
     <p class="crypto-intro">
       ¿Quieres generar una contraseña usando criptografía antigua?<br>
       Descubre qué tan seguras serían hoy estos métodos históricos.
     </p>
-
-    <h1>Módulo de Criptografía</h1>
-
-    <!-- NUEVO BOTÓN -->
-    <router-link to="/seguridad" class="secure-password-btn">
-      Aprende a crear contraseñas seguras →
-    </router-link>
 
     <div class="crypto-courses-grid">
       <router-link
@@ -25,9 +17,17 @@
         <p>{{ cifrado.descripcion }}</p>
         <div class="crypto-courses-link">Ver más →</div>
       </router-link>
+
+      <!-- Sexta tarjeta: botón destacado -->
+      <router-link to="/seguridad" class="crypto-courses-card highlight-card">
+        <h2>Aprende a hacer contraseñas seguras</h2>
+        <p>Descubre buenas prácticas, genera claves fuertes fácilmente y evalúa tu contraseña.</p>
+        <div class="crypto-courses-link">Ir al generador →</div>
+      </router-link>
     </div>
   </div>
 </template>
+
 
 <script>
 import '@/assets/crypto-courses.css';

@@ -90,3 +90,39 @@
   font-size: 0.95rem;
 }
 
+.cipher-back-button {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #f9b234;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.cipher-back-button:hover {
+  text-decoration: underline;
+  color: #ffd36c;
+}
+
+.copiar-btn,
+.guardar-btn {
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color: #3ecd5e;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.copiar-btn:hover,
+.guardar-btn:hover {
+  background-color: #2ea64f;
+}
+
+.copiado-msg {
+  color: #8bc34a;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+

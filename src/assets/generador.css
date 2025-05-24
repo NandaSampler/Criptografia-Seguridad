@@ -161,6 +161,37 @@ input[type="text"] {
 .enlace-clave:hover {
   text-decoration: underline;
 }
+/* === Radios y checkbox === */
+.radio-label input[type="radio"],
+input[type="checkbox"] {
+  accent-color: #f9b234;
+  transform: scale(1.2);
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.radio-label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #fff;
+}
+
+/* === Botón clave aleatoria === */
+.clave-btn {
+  margin-left: 12px;
+  background-color: #3ecd5e;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.clave-btn:hover {
+  background-color: #2ea64f;
+}
+
 
 
 

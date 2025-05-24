@@ -1,7 +1,8 @@
 <template>
   <div class="cipher-container">
-    <h2 class="cipher-title">Cifrado de Polibio</h2>
-
+    <h2 class="cipher-title" style="color: #8e44ad;">
+      Cifrado de Polibio
+    </h2>
 
     <p class="cipher-description">
       Utiliza una tabla 5x5 para convertir letras en pares de números según su posición. Fue usado para enviar
@@ -20,11 +21,15 @@
       <strong>Resultado:</strong> {{ resultado }}
     </div>
 
+    <div v-if="resultado" class="cipher-buttons">
+      <button class="copiar-btn" @click="copiar">Copiar</button>
+      <span v-if="copiado" class="copiado-msg">¡Copiado al portapapeles!</span>
+    </div>
+
     <div v-if="resultado" class="cipher-warning">
       ⚠️ Este cifrado produce solo números, lo que lo hace predecible.
       <strong>No se recomienda usarlo para contraseñas modernas.</strong>
     </div>
-
 
     <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
       <strong>Pasos:</strong>
@@ -33,6 +38,9 @@
       </ul>
     </div>
 
+    <router-link to="/criptografia" class="cipher-back-button">
+      ← Volver
+    </router-link>
   </div>
 </template>
 
@@ -45,13 +53,16 @@ export default {
     return {
       texto: '',
       resultado: '',
-      pasos: []
+      pasos: [],
+      copiado: false
     };
   },
   methods: {
     cifrar() {
       this.resultado = '';
       this.pasos = [];
+      this.copiado = false;
+
       let resultadoParcial = '';
       const texto = this.texto.toLowerCase().replace(/j/g, 'i');
       const tabla = [
@@ -97,6 +108,8 @@ export default {
     descifrar() {
       this.resultado = '';
       this.pasos = [];
+      this.copiado = false;
+
       let resultadoParcial = '';
       const texto = this.texto.replace(/\s+/g, '');
       const tabla = [
@@ -131,6 +144,13 @@ export default {
       };
 
       procesarPar();
+    },
+
+    copiar() {
+      navigator.clipboard.writeText(this.resultado).then(() => {
+        this.copiado = true;
+        setTimeout(() => (this.copiado = false), 2000);
+      });
     }
   }
 };

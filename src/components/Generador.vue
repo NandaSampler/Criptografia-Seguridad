@@ -3,11 +3,12 @@
     <h2>Generador de Contraseñas Seguras</h2>
 
     <div class="generador-opciones">
-      <label><input type="radio" value="aleatoria" v-model="modo" /> Aleatoria</label>
-      <label><input type="radio" value="enigma" v-model="modo" /> Enigma</label>
-      <label><input type="radio" value="alberti" v-model="modo" /> Alberti</label>
-      <label><input type="radio" value="personalizada" v-model="modo" /> Personalizada</label>
-    </div>
+  <label class="radio-label"><input type="radio" value="personalizada" v-model="modo" /> Personalizada</label>
+  <label class="radio-label"><input type="radio" value="aleatoria" v-model="modo" /> Aleatoria</label>
+  <label class="radio-label"><input type="radio" value="enigma" v-model="modo" /> Enigma</label>
+  <label class="radio-label"><input type="radio" value="alberti" v-model="modo" /> Alberti</label>
+</div>
+
 
     <div v-if="modo === 'aleatoria'" class="config-avanzada">
       <label>Longitud:
@@ -17,10 +18,10 @@
         <input type="text" v-model="excluir" placeholder="Ej: lIO0" />
       </label>
       <label>Cantidad máxima de números:
-        <input type="number" v-model.number="maxNumeros" min="0" max="5" />
+        <input type="number" v-model.number="maxNumeros" min="1" max="5" />
       </label>
       <label>Cantidad máxima de mayúsculas:
-        <input type="number" v-model.number="maxMayusculas" min="0" max="5" />
+        <input type="number" v-model.number="maxMayusculas" min="1" max="5" />
       </label>
       <label><input type="checkbox" v-model="incluirSimbolos" /> Incluir símbolos</label>
     </div>
@@ -38,11 +39,12 @@
     </div>
 
     <div v-if="modo === 'enigma' || modo === 'alberti'" class="config-avanzada">
-      <label>Clave:
-        <input type="text" v-model="clave" placeholder="Ej: ABC12" maxlength="20" />
-        <button @click="generarClaveAleatoria">Clave aleatoria</button>
-      </label>
-    </div>
+  <label>Clave:
+    <input type="text" v-model="clave" placeholder="Ej: ABC12" maxlength="20" />
+    <button class="clave-btn" @click="generarClaveAleatoria">Clave aleatoria</button>
+  </label>
+</div>
+
 
     <button class="generar-btn" @click="generar">Generar contraseña</button>
 
@@ -76,12 +78,11 @@
       </ul>
     </div>
 
-    <!-- Enlace informativo para Enigma o Alberti -->
     <div v-if="(modo === 'enigma' || modo === 'alberti') && resultado" class="enlace-metodos">
       <p>
         Esta contraseña se generó con un texto de ingreso aleatorio.
         <router-link to="/criptografia" class="enlace-clave">
-          ¿Quieres personalizar tu texto? Explora los métodos de encriptación →
+          ¿Quieres personalizar tu texto? Explora los métodos de criptografia →
         </router-link>
       </p>
     </div>

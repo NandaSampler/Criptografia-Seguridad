@@ -1,40 +1,50 @@
 <template>
-    <div class="cipher-container">
-        <h2 class="cipher-title">Escítala Espartana</h2>
+  <div class="cipher-container">
+    <h2 class="cipher-title" style="color: #8e44ad;">
+      Escitala Espartana
+    </h2>
 
-        <p class="cipher-description">
-            Cifra el mensaje al reorganizar sus letras en una matriz y leerlas por columnas. Fue utilizada por los
-            espartanos con cilindros de madera.
-        </p>
+    <p class="cipher-description">
+      Cifra el mensaje al reorganizar sus letras en una matriz y leerlas por columnas. Fue utilizada por los
+      espartanos con cilindros de madera.
+    </p>
 
-        <label class="cipher-label">Texto:</label>
-        <input v-model="texto" class="cipher-input" />
+    <label class="cipher-label">Texto:</label>
+    <input v-model="texto" class="cipher-input" />
 
-        <label class="cipher-label">Columnas:</label>
-        <input type="number" v-model.number="columnas" class="cipher-input" />
+    <label class="cipher-label">Columnas:</label>
+    <input type="number" v-model.number="columnas" class="cipher-input" />
 
-        <div class="cipher-buttons">
-            <button @click="cifrar" class="btn">Cifrar</button>
-            <button @click="descifrar" class="btn alt">Descifrar</button>
-        </div>
-
-        <div v-if="resultado" class="cipher-output">
-            <strong>Resultado:</strong> {{ resultado }}
-        </div>
-
-        <div v-if="resultado" class="cipher-warning">
-  ⚠️ Este método depende del objeto físico (el cilindro) y es fácilmente vulnerable si se conoce la cantidad de columnas.  
-  <strong>No es adecuado para proteger información sensible hoy en día.</strong>
-</div>
-
-
-        <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
-  <strong>Pasos:</strong>
-  <ul>
-    <li v-for="(paso, i) in pasos" :key="i">{{ paso }}</li>
-  </ul>
-</div>
+    <div class="cipher-buttons">
+      <button @click="cifrar" class="btn">Cifrar</button>
+      <button @click="descifrar" class="btn alt">Descifrar</button>
     </div>
+
+    <div v-if="resultado" class="cipher-output">
+      <strong>Resultado:</strong> {{ resultado }}
+    </div>
+
+    <div v-if="resultado" class="cipher-buttons">
+      <button class="copiar-btn" @click="copiar">Copiar</button>
+      <span v-if="copiado" class="copiado-msg">¡Copiado al portapapeles!</span>
+    </div>
+
+    <div v-if="resultado" class="cipher-warning">
+      ⚠️ Este método depende del objeto físico (el cilindro) y es fácilmente vulnerable si se conoce la cantidad de columnas.  
+      <strong>No es adecuado para proteger información sensible hoy en día.</strong>
+    </div>
+
+    <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
+      <strong>Pasos:</strong>
+      <ul>
+        <li v-for="(paso, i) in pasos" :key="i">{{ paso }}</li>
+      </ul>
+    </div>
+
+    <router-link to="/criptografia" class="cipher-back-button">
+      ← Volver
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -47,19 +57,20 @@ export default {
       texto: '',
       columnas: 3,
       resultado: '',
-      pasos: []
+      pasos: [],
+      copiado: false
     };
   },
   methods: {
     cifrar() {
       this.resultado = '';
       this.pasos = [];
+      this.copiado = false;
 
       const textoLimpio = this.texto.replace(/\s+/g, '');
       const filas = Math.ceil(textoLimpio.length / this.columnas);
       const matriz = Array.from({ length: filas }, () => Array(this.columnas).fill(''));
 
-      // Llenamos la matriz por filas
       let index = 0;
       for (let r = 0; r < filas; r++) {
         for (let c = 0; c < this.columnas; c++) {
@@ -69,7 +80,6 @@ export default {
         }
       }
 
-      // Recorremos por columnas con animación
       let resultadoParcial = '';
       let c = 0, r = 0;
 
@@ -101,12 +111,12 @@ export default {
     descifrar() {
       this.resultado = '';
       this.pasos = [];
+      this.copiado = false;
 
       const textoLimpio = this.texto.replace(/\s+/g, '');
       const filas = Math.ceil(textoLimpio.length / this.columnas);
       const matriz = Array.from({ length: filas }, () => Array(this.columnas).fill(''));
 
-      // Llenamos por columnas
       let index = 0;
       for (let c = 0; c < this.columnas; c++) {
         for (let r = 0; r < filas; r++) {
@@ -116,7 +126,6 @@ export default {
         }
       }
 
-      // Recorremos por filas con animación
       let resultadoParcial = '';
       let r = 0, c = 0;
 
@@ -143,8 +152,14 @@ export default {
       };
 
       procesarFila();
+    },
+
+    copiar() {
+      navigator.clipboard.writeText(this.resultado).then(() => {
+        this.copiado = true;
+        setTimeout(() => (this.copiado = false), 2000);
+      });
     }
   }
 };
 </script>
-

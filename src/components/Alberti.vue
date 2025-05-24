@@ -1,6 +1,6 @@
 <template>
   <div class="cipher-container">
-    <h2 class="cipher-title" style="color: #e67e22;">
+    <h2 class="cipher-title" style="color: #8e44ad;">
       Cifrado de Alberti
     </h2>
 
@@ -24,6 +24,11 @@
       <strong>Resultado:</strong> {{ resultado }}
     </div>
 
+    <div v-if="resultado" class="cipher-buttons">
+      <button class="copiar-btn" @click="copiar">Copiar</button>
+      <span v-if="copiado" class="copiado-msg">¡Copiado al portapapeles!</span>
+    </div>
+
     <div v-if="pasos.length" class="cipher-output" style="margin-top: 1rem;">
       <strong>Pasos:</strong>
       <ul>
@@ -32,14 +37,15 @@
     </div>
 
     <div v-if="resultado" class="cipher-warning">
-  🔐 Este cifrado polialfabético rotativo fue uno de los más avanzados de su tiempo.  
-  <strong>Más seguro que los cifrados monoalfabéticos, aunque aún vulnerable sin claves modernas.</strong>
-</div>
+      🔐 Este cifrado polialfabético rotativo fue uno de los más avanzados de su tiempo.  
+      <strong>Más seguro que los cifrados monoalfabéticos, aunque aún vulnerable sin claves modernas, si lo usas para crear tu contraseña asegurate de usar una clave difícil.</strong>
+    </div>
 
-
+    <router-link to="/criptografia" class="cipher-back-button">
+      ← Volver
+    </router-link>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -49,13 +55,15 @@ export default {
       texto: '',
       clave: '',
       resultado: '',
-      pasos: []
+      pasos: [],
+      copiado: false
     };
   },
   methods: {
     cifrar() {
       this.resultado = '';
       this.pasos = [];
+      this.copiado = false;
 
       const abc = 'abcdefghijklmnopqrstuvwxyz';
       const texto = this.texto.toLowerCase();
@@ -90,6 +98,7 @@ export default {
     descifrar() {
       this.resultado = '';
       this.pasos = [];
+      this.copiado = false;
 
       const abc = 'abcdefghijklmnopqrstuvwxyz';
       const texto = this.texto.toLowerCase();
@@ -119,6 +128,13 @@ export default {
       };
 
       procesar(0);
+    },
+
+    copiar() {
+      navigator.clipboard.writeText(this.resultado).then(() => {
+        this.copiado = true;
+        setTimeout(() => (this.copiado = false), 2000);
+      });
     }
   }
 };

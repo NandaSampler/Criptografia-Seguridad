@@ -89,6 +89,30 @@
   transform: translateY(-2px);
 }
 
+.home-button-wrapper {
+  max-width: 1142px;
+  margin: 2rem auto 0;
+  text-align: right;
+}
+
+.intro-crypto {
+  text-align: center;
+  color: #ddd;
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.intro-crypto h2 {
+  font-size: 2rem;
+  color: #f9b234;
+  margin-bottom: 1rem;
+}
+
+.intro-crypto p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
 /* 9) Móvil */
 @media (max-width: 767px) {
   .home-section {
